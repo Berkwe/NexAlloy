@@ -1,0 +1,50 @@
+name: Development APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feat/morphe-patch-sync']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: development-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - name: Install required SDK
+        run: sdkmanager "platforms;android-37"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Inspect available app tasks
+        run: bash ./gradlew :app:tasks --all --console=plain
+      - name: Build debug APK and run checks
+        run: bash ./gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintDebug --stacktrace --console=plain
+      - name: Upload debug APK
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nexalloy-development-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+      - name: Upload diagnostic reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: development-check-reports
+          path: |
+            app/build/reports/
+            app/build/test-results/
+          if-no-files-found: warn
