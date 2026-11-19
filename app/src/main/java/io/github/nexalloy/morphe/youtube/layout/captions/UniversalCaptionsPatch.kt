@@ -23,6 +23,7 @@ val UniversalCaptions = patch(
     val setLanguage = universalLanguageSetter.method
     val setUrl = universalUrlSetter.method
     val setVss = universalVssSetter.method
+    require(setOf(setLanguage, setUrl, setVss).size == 3) { "Caption builder setters must be distinct" }
     require(constructor.parameterTypes.single() == build.returnType)
     require(labelField.declaringClass == constructor.declaringClass)
 

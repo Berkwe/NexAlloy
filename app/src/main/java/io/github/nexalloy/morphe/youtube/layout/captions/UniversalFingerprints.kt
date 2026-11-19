@@ -65,7 +65,7 @@ internal object UniversalCaptionTrackBuilderCopyConstructorFingerprint : Fingerp
 )
 
 
-internal class UniversalCaptionTrackBuilderSetterFingerprint(nullValueMessage: String) : Fingerprint(
+internal open class UniversalCaptionTrackBuilderSetterFingerprint(nullValueMessage: String) : Fingerprint(
     classFingerprint = UniversalCaptionTrackBuilderBuildFingerprint,
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     returnType = "V",
@@ -87,8 +87,8 @@ internal fun universalTrackField(setter: Fingerprint) = findFieldDirect {
     }.mapNotNull { it.fieldRef }.distinct().single()
 }
 
-internal val universalLanguageSetter = UniversalCaptionTrackBuilderSetterFingerprint("Null languageCode")
-internal val universalUrlSetter = UniversalCaptionTrackBuilderSetterFingerprint("Null url")
-internal val universalVssSetter = UniversalCaptionTrackBuilderSetterFingerprint("Null vssId")
+internal object universalLanguageSetter : UniversalCaptionTrackBuilderSetterFingerprint("Null languageCode")
+internal object universalUrlSetter : UniversalCaptionTrackBuilderSetterFingerprint("Null url")
+internal object universalVssSetter : UniversalCaptionTrackBuilderSetterFingerprint("Null vssId")
 internal val universalLanguageField = universalTrackField(universalLanguageSetter)
 internal val universalVssField = universalTrackField(universalVssSetter)
