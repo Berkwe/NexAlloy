@@ -2,8 +2,9 @@
 
 package io.github.nexalloy.morphe.youtube.layout.captions
 
-import android.preference.PreferenceManager
+import android.content.Context
 import app.morphe.extension.shared.Utils
+import app.morphe.extension.shared.settings.Setting
 import io.github.nexalloy.morphe.shared.misc.settings.preference.SwitchPreference
 import io.github.nexalloy.morphe.youtube.misc.settings.PreferenceScreen
 import io.github.nexalloy.patch
@@ -35,7 +36,7 @@ val UniversalCaptions = patch(
             if (param.hasThrowable()) return@after
             val original = param.result as? List<*> ?: return@after
             try {
-                if (!PreferenceManager.getDefaultSharedPreferences(Utils.getContext())
+                if (!Utils.getContext().getSharedPreferences(Setting.preferences.name, Context.MODE_PRIVATE)
                         .getBoolean("nexalloy_universal_captions", false)) return@after
                 if (original.any { it == null }) return@after
                 @Suppress("UNCHECKED_CAST")
