@@ -11,7 +11,7 @@ internal object UniversalTranslations {
     data class Track(val code: String, val url: String, val vss: String)
     private val language = Regex("[a-z]{2,8}(-[A-Za-z0-9]{2,8})*")
     private fun key(code: String) = Locale.forLanguageTag(code).toLanguageTag().lowercase(Locale.ROOT)
-    private data class Source(val identity: String, val language: String, val offset: Int)
+    private data class Source(val language: String, val offset: Int)
     private fun source(track: Track): Source {
         require(language.matches(track.code))
         val uri = URI(track.url)
@@ -39,24 +39,20 @@ internal object UniversalTranslations {
         require(language.matches(source))
         fields["v"]?.let { require(Regex("[A-Za-z0-9_-]{1,128}").matches(it)) }
         require(track.vss.startsWith("t") && track.vss.endsWith("." + track.code))
-        val original = track.vss.substring(1, track.vss.length - track.code.length - 1)
-        require(listOf("a.$source", ".$source").any {
-            original == it || original.startsWith("$it.") &&
-                Regex("[A-Za-z0-9_-]{1,128}").matches(original.substring(it.length + 1))
-        })
-        return Source(original + "|" + track.url.substring(0, target) + "\u0000" +
-            track.url.substring(target + track.code.length), source, target)
+        return Source(source, target)
     }
 
     fun <T : Any> expand(tracks: List<T>, read: (T) -> Track,
                         copy: (T, Track, String) -> T, locale: Locale = Locale.getDefault()): List<T> {
         if (tracks.isEmpty()) return tracks
         return try {
-            val template = read(tracks.first())
-            val source = source(template)
-            val existing = tracks.map { read(it).also { item ->
-                require(source(item).identity == source.identity)
-            } }.map { key(it.code) }.toMutableSet()
+            val candidates = tracks.mapNotNull { native ->
+                runCatching { native to read(native) }.getOrNull()
+            }
+            val (nativeTemplate, template, source) = candidates.firstNotNullOfOrNull { (native, track) ->
+                runCatching { Triple(native, track, source(track)) }.getOrNull()
+            } ?: return tracks
+            val existing = candidates.map { key(it.second.code) }.toMutableSet()
             val added = languages.filter { key(it) != key(source.language) && existing.add(key(it)) }
                 .map { code ->
                     val label = Locale.forLanguageTag(if (code == "pt") "pt-BR" else code).getDisplayName(locale)
@@ -64,7 +60,7 @@ internal object UniversalTranslations {
                         template.url.substring(0, source.offset) + code +
                             template.url.substring(source.offset + template.code.length),
                         template.vss.dropLast(template.code.length) + code)
-                    val native = copy(tracks.first(), translated, label.ifEmpty { code })
+                    val native = copy(nativeTemplate, translated, label.ifEmpty { code })
                     require(read(native) == translated)
                     native to label.ifEmpty { code }
                 }

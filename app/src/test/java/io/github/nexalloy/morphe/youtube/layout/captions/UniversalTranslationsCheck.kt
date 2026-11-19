@@ -11,10 +11,17 @@ fun main() {
     check(turkish.vss == "t.en.tr")
     check(result.none { it.code == "en" })
     check(result.map { it.code }.distinct().size == result.size)
+    val other = UniversalTranslations.Track("fr", url.replace("tlang=de", "tlang=fr")
+        .replace("sig=A%2Fb", "sig=other"), "t.a.en.fr")
+    val invalidFirst = template.copy(url = url.replace("youtube.com", "example.com"))
+    val mixed = UniversalTranslations.expand(listOf(invalidFirst, other, template), { it }, { _, t, _ -> t })
+    check(mixed.containsAll(listOf(invalidFirst, other, template)))
+    check(mixed.single { it.code == "tr" }.url.contains("sig=other&tlang=tr"))
+    check(listOf("tr", "is", "eu", "cy").all { code -> mixed.any { it.code == code } })
     val empty = emptyList<UniversalTranslations.Track>()
     check(UniversalTranslations.expand(empty, { it }, { _, t, _ -> t }) === empty)
     for (invalid in listOf(url.replace("#anchor", "&tlang=fr#anchor"), url.replace("tlang=de", "%74lang=de"),
-        url.replace("youtube.com", "example.com"), url.replace("lang=en", "lang=fr"))) {
+        url.replace("youtube.com", "example.com"), url.replace("lang=en", "lang=!"))) {
         val bad = listOf(template.copy(url = invalid))
         check(UniversalTranslations.expand(bad, { it }, { _, t, _ -> t }) === bad)
     }
