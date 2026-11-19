@@ -1,0 +1,51 @@
+{
+  "NexAlloy/NexAlloy": {
+    "branch": "main",
+    "sha": "a0687707a821f0e2844be84b71d94f0a7c67fb05",
+    "first_api_tag": {
+      "name": "autobuild",
+      "zipball_url": "https://api.github.com/repos/NexAlloy/NexAlloy/zipball/refs/tags/autobuild",
+      "tarball_url": "https://api.github.com/repos/NexAlloy/NexAlloy/tarball/refs/tags/autobuild",
+      "commit": {
+        "sha": "852290b1b0a5bbdfae1d1d2e75007b9fc5907c58",
+        "url": "https://api.github.com/repos/NexAlloy/NexAlloy/commits/852290b1b0a5bbdfae1d1d2e75007b9fc5907c58"
+      },
+      "node_id": "REF_kwDOMKG1jbNyZWZzL3RhZ3MvYXV0b2J1aWxk"
+    }
+  },
+  "MorpheApp/morphe-patches": {
+    "branch": "main",
+    "sha": "31234a8465683a389bcfba25ad636fd1cd38fd02",
+    "first_api_tag": {
+      "name": "v2.4.0-dev.5",
+      "zipball_url": "https://api.github.com/repos/MorpheApp/morphe-patches/zipball/refs/tags/v2.4.0-dev.5",
+      "tarball_url": "https://api.github.com/repos/MorpheApp/morphe-patches/tarball/refs/tags/v2.4.0-dev.5",
+      "commit": {
+        "sha": "ac80ff66e66d9cb5818eee44e69e6206aa26c23b",
+        "url": "https://api.github.com/repos/MorpheApp/morphe-patches/commits/ac80ff66e66d9cb5818eee44e69e6206aa26c23b"
+      },
+      "node_id": "REF_kwDOQdaZo7ZyZWZzL3RhZ3MvdjIuNC4wLWRldi41"
+    }
+  },
+  "itolkien/universal-captions": {
+    "branch": "main",
+    "sha": "0f84a93bd2707575c97e246b0915bee6c2f768a0",
+    "first_api_tag": {
+      "name": "v3.0.1",
+      "zipball_url": "https://api.github.com/repos/itolkien/universal-captions/zipball/refs/tags/v3.0.1",
+      "tarball_url": "https://api.github.com/repos/itolkien/universal-captions/tarball/refs/tags/v3.0.1",
+      "commit": {
+        "sha": "bc965a6e310953af4ecf71fee6c795196a806269",
+        "url": "https://api.github.com/repos/itolkien/universal-captions/commits/bc965a6e310953af4ecf71fee6c795196a806269"
+      },
+      "node_id": "REF_kwDOVILbObByZWZzL3RhZ3MvdjMuMC4x"
+    }
+  },
+  "revanced/revanced-patches": {
+    "branch": null,
+    "sha": null,
+    "first_api_tag": {
+      "error": "gh: Repository access blocked (HTTP 451)"
+    }
+  }
+}
