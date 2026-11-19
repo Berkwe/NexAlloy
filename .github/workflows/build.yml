@@ -29,8 +29,7 @@ jobs:
           packages: platform-tools
       - name: Install required SDK
         run: |
-          sdkmanager --list --channel=3
-          sdkmanager --channel=3 "platforms;android-37"
+          sdkmanager "platforms;android-37.0"
       - uses: gradle/actions/setup-gradle@v4
       - name: Inspect available app tasks
         run: bash ./gradlew :app:tasks --all --console=plain
