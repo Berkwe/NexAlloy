@@ -33,8 +33,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Inspect available app tasks
         run: bash ./gradlew :app:tasks --all --console=plain
-      - name: Build debug APK and run checks
-        run: bash ./gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintDebug --stacktrace --console=plain
+      - name: Build debug APK
+        run: bash ./gradlew :app:assembleDebug --stacktrace --console=plain
+      - name: Run unit tests and lint
+        run: bash ./gradlew :app:testDebugUnitTest :app:lintDebug --continue --stacktrace --console=plain
       - name: Upload debug APK
         if: always()
         uses: actions/upload-artifact@v7
