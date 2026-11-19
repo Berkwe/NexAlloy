@@ -26,6 +26,7 @@ import io.github.nexalloy.morphe.youtube.interaction.swipecontrols.SwipeControls
 import io.github.nexalloy.morphe.youtube.layout.branding.header.changeHeaderPatch
 import io.github.nexalloy.morphe.youtube.layout.buttons.action.HideVideoActionButtons
 import io.github.nexalloy.morphe.youtube.layout.buttons.navigation.NavigationBar
+import io.github.nexalloy.morphe.youtube.layout.captions.UniversalCaptions
 import io.github.nexalloy.morphe.youtube.layout.captions.AutoCaptions
 import io.github.nexalloy.morphe.youtube.layout.dearrow.deArrowPatch
 import io.github.nexalloy.morphe.youtube.layout.flyout.addToQueuePatch
@@ -116,6 +117,7 @@ val YouTubePatches = arrayOf(
     HideVideoActionButtons,
     PlaybackSpeed,
     AutoCaptions,
+    UniversalCaptions,
     EnableDebugging,
     ForceOriginalAudio,
     DisableVideoCodecs,
